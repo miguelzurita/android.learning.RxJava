@@ -3,8 +3,9 @@ package com.jonbott.learningrxjava.Activities.ThreadingExample
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jonbott.learningrxjava.ModelLayer.Entities.Friend
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 class ThreadingExamplePresenter {
@@ -23,7 +24,7 @@ class ThreadingExamplePresenter {
 //        thread(start = true){
 //            Thread.sleep(3000)
 
-        launch {
+        GlobalScope.launch {
             delay(3000)
 
             title.onNext("Friends Loaded")
