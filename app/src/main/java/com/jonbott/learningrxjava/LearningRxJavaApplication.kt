@@ -23,7 +23,8 @@ class LearningRxJavaApplication: Application() {
         println("Simple App being used.")
 
 //        SimpleRx.simpleValues()
-        SimpleRx.subjects()
+//        SimpleRx.subjects()
+        SimpleRx.basicObservable()
 
 //        setupDatabase()
     }
