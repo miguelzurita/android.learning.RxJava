@@ -35,20 +35,24 @@ object SimpleRx {
         val behaviourSubject = BehaviorSubject.createDefault(24)
         val disposable = behaviourSubject.subscribe({//onNext event
             newValue ->
-            println("behaviour subcription: ${newValue}")
+            println("¬ behaviourSubjct subcription: ${newValue}")
         }, { //onError
             error ->
-            println("error: ${error.localizedMessage}")
+            println("¬ error: ${error.localizedMessage}")
         }, {
             //on Completed
-            println("completed")
+            println("¬ completed")
         }, { //onSubcribed
             disposable ->
-            println("subscribed")
+            println("¬ subscribed")
         })
 
         behaviourSubject.onNext(34)
         behaviourSubject.onNext(48)
         behaviourSubject.onNext(48)
+
+        val someException = IllegalArgumentException("some fake error")
+        behaviourSubject.onError(someException)
+        behaviourSubject.onNext(109)
     }
 }
