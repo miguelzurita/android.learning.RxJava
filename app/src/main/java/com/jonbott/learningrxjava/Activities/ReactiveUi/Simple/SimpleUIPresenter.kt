@@ -31,5 +31,13 @@ class SimpleUIPresenter {
             Friend("Yan", "Ybarbo"),
             Friend("Armando", "Araiza"),
             Friend("Dolly", "Delapaz"),
-            Friend("Juliane", "Jobin"))
+            Friend("Juliane", "Jobin"),
+            Friend("Juliane1", "Jobin1"),
+            Friend("Juliane2", "Jobin2"),
+            Friend("Juliane3", "Jobin3"),
+            Friend("Juliane4", "Jobin4"),
+            Friend("Juliane5", "Jobin5"),
+            Friend("Juliane6", "Jobin6"),
+            Friend("Juliane7", "Jobin7")
+    )
 }

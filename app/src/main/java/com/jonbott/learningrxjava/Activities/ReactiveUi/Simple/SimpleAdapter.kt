@@ -18,38 +18,42 @@ class SimpleAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val holder: FriendViewHolder
+        val friend = presenter.friends[position]
         if (convertView == null) {
-            val binding: ListItemFriendBinding = DataBindingUtil.inflate(LayoutInflater.from(parent?.context), R.layout.list_item_friend, parent, false)
-            val friend = presenter.friends[position]
-            holder = FriendViewHolder(binding, friend)
-            holder.view.setOnClickListener(View.OnClickListener {
-                presenter.onItemClick(friend)
-            })
+            holder = FriendViewHolder(getBinding(parent), friend)
         } else {
             holder = convertView.tag as FriendViewHolder
+            holder.setData(friend)
+        }
+        holder.view.setOnClickListener {
+            presenter.onItemClick(friend)
         }
 
         return holder.view
     }
 
-    override fun getItem(position: Int): Any {
-        return presenter.friends[position]
-    }
+    private fun getBinding(parent: ViewGroup?): ListItemFriendBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(context)
+                    , R.layout.list_item_friend, parent
+                    , false)
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItem(position: Int): Any = presenter.friends[position]
 
-    override fun getCount(): Int {
-        return presenter.friends.size
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    private class FriendViewHolder(var binding: ListItemFriendBinding, friend: Friend) {
+    override fun getCount() = presenter.friends.size
+
+    private class FriendViewHolder(binding: ListItemFriendBinding, friend: Friend) {
         var view: View = binding.root
 
         init {
             view.tag = this
+            setData(friend)
+        }
+
+        fun setData(friend: Friend) {
             view.tv_friend_first_name.text = friend.firstName
+            view.tv_friend_last_name.text = friend.lastName
         }
     }
 
