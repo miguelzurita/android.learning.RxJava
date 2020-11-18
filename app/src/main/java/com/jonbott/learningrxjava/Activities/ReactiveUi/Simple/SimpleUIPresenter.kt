@@ -1,10 +1,15 @@
 package com.jonbott.learningrxjava.Activities.ReactiveUi.Simple
 
 import com.jonbott.learningrxjava.ModelLayer.Entities.Friend
+import io.reactivex.subjects.BehaviorSubject
 
 class SimpleUIPresenter {
+
+    val selectedFriend = BehaviorSubject.createDefault(Friend("friend", "nn"))
+
     fun onItemClick(friend: Friend) {
-        println("link item:" + friend.firstName + " - " + friend.lastName)
+        selectedFriend.onNext(friend)
+//        println("link item:" + friend.firstName + " - " + friend.lastName)
     }
 
     var friends = listOf(Friend("Debi", "Darlington"),
