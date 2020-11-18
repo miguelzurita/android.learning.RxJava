@@ -10,6 +10,7 @@ class SimpleUIActivity : AppCompatActivity() {
 
     private val presenter = SimpleUIPresenter()
     private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var simpleAdapter: SimpleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +25,10 @@ class SimpleUIActivity : AppCompatActivity() {
 
 
     private fun rxSimpleListBind() {
-        val listItems = presenter.friends.map { it.toString() }
-
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-
-        simpleUIListView.adapter = adapter
+//        val listItems = presenter.friends.map { it.toString() }
+//        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
+//        simpleUIListView.adapter = adapter
+        simpleAdapter = SimpleAdapter(this, presenter.friends)
+        simpleUIListView.adapter = simpleAdapter
     }
 }
