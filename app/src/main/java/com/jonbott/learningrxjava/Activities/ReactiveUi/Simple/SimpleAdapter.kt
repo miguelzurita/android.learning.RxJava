@@ -1,6 +1,5 @@
 package com.jonbott.learningrxjava.Activities.ReactiveUi.Simple
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.view.LayoutInflater
@@ -14,18 +13,18 @@ import kotlinx.android.synthetic.main.list_item_friend.view.*
 
 class SimpleAdapter(
         private val context: Context,
-        private val dataSource: List<Friend>
+        private val presenter: SimpleUIPresenter
 ) : BaseAdapter() {
 
-    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-//        val rowView = inflater.inflate(R.layout.list_item_friend, parent, false)
-//        tv_friend
-
         val holder: FriendViewHolder
         if (convertView == null) {
             val binding: ListItemFriendBinding = DataBindingUtil.inflate(LayoutInflater.from(parent?.context), R.layout.list_item_friend, parent, false)
-            holder = FriendViewHolder(binding, dataSource[position])
+            val friend = presenter.friends[position]
+            holder = FriendViewHolder(binding, friend)
+            holder.view.setOnClickListener(View.OnClickListener {
+                presenter.onItemClick(friend)
+            })
         } else {
             holder = convertView.tag as FriendViewHolder
         }
@@ -34,7 +33,7 @@ class SimpleAdapter(
     }
 
     override fun getItem(position: Int): Any {
-        return dataSource[position]
+        return presenter.friends[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -42,7 +41,7 @@ class SimpleAdapter(
     }
 
     override fun getCount(): Int {
-        return dataSource.size
+        return presenter.friends.size
     }
 
     private class FriendViewHolder(var binding: ListItemFriendBinding, friend: Friend) {

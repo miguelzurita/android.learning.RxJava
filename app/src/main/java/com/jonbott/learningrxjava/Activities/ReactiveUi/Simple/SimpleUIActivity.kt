@@ -28,7 +28,7 @@ class SimpleUIActivity : AppCompatActivity() {
 //        val listItems = presenter.friends.map { it.toString() }
 //        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
 //        simpleUIListView.adapter = adapter
-        simpleAdapter = SimpleAdapter(this, presenter.friends)
+        simpleAdapter = SimpleAdapter(this, presenter)
         simpleUIListView.adapter = simpleAdapter
     }
 }
