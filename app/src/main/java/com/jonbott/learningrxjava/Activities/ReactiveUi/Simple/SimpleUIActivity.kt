@@ -2,6 +2,7 @@ package com.jonbott.learningrxjava.Activities.ReactiveUi.Simple
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.ArrayAdapter
 import com.jonbott.learningrxjava.Common.disposedBy
 import com.jonbott.learningrxjava.R
@@ -41,6 +42,10 @@ class SimpleUIActivity : AppCompatActivity() {
             simpleUITitleTextView.text = it.firstName
 //            println("link item:" + it.firstName + " - " + it.lastName)
         }).disposedBy(bag)
+
+        simpleUIAcceptButton.setOnClickListener(View.OnClickListener {
+            presenter.clearFriend()
+        })
     }
 
     override fun onStop() {
