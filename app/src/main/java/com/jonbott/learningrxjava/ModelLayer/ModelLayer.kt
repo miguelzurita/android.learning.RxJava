@@ -5,6 +5,7 @@ import com.jonbott.learningrxjava.ModelLayer.Entities.Message
 import com.jonbott.learningrxjava.ModelLayer.NetworkLayer.NetworkLayer
 import com.jonbott.learningrxjava.ModelLayer.PersistenceLayer.PersistenceLayer
 import com.jonbott.learningrxjava.ModelLayer.PersistenceLayer.PhotoDescription
+import io.reactivex.Single
 
 class ModelLayer {
 
@@ -26,9 +27,9 @@ class ModelLayer {
     }
 
     fun getMessages() {
-        return networkLayer.getMessages({messages->
+        return networkLayer.getMessages({ messages ->
             this.messages.accept(messages)
-        }, {errorMessage->
+        }, { errorMessage ->
             notifyError(errorMessage)
         })
     }
@@ -39,5 +40,13 @@ class ModelLayer {
 
     fun insertItem(photoDescription: PhotoDescription) {
         persistenceLayer.insertItem(photoDescription)
+    }
+
+    fun getMessagesRx(): Single<List<Message>> {
+        return networkLayer.getMessagesRx()
+    }
+
+    fun getMessageRx(articleId:String): Single<Message> {
+        return networkLayer.getMessageRx(articleId)
     }
 }
