@@ -75,9 +75,9 @@
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="@+id/userIdTextView"
             app:layout_constraintStart_toStartOf="@+id/userIdTextView"
             app:layout_constraintTop_toTopOf="@+id/titleLabel" />
@@ -87,13 +87,12 @@
             android:id="@+id/bodyLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Title:"
             android:textAlignment="textEnd"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/titleLabel"
             app:layout_constraintStart_toStartOf="@+id/titleLabel"
-            app:layout_constraintTop_toBottomOf="@+id/titleLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
         <TextView
             android:id="@+id/bodyTextView"

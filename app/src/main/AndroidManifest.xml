@@ -30,7 +30,13 @@
         <activity
             android:name=".Activities.NetworkExample.NetworkExampleActivity"
             android:label="@string/title_activity_network_example"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".Activities.TasksExample.TasksExampleActivity" />
         <activity android:name=".Activities.ReactiveUi.Complex.ReactiveUIActivity" />
         <activity android:name=".Activities.ReactiveUi.Simple.SimpleUIActivity">
