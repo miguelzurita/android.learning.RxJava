@@ -18,9 +18,12 @@ class ModelLayer {
 
     fun loadAllPhotoDescriptions() {
         //result may be immediate
-        persistenceLayer.loadAllPhotoDescriptions {photoDescriptions->
+        persistenceLayer.loadAllPhotoDescriptions { photoDescriptions ->
             this.photoDescriptions.accept(photoDescriptions)
-
         }
+    }
+
+    fun insertItem(photoDescription: PhotoDescription) {
+        persistenceLayer.insertItem(photoDescription)
     }
 }

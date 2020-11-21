@@ -21,7 +21,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.BasicExampleActivity" />
-        <activity android:name=".Activities.DatabaseExample.DatabaseExampleActivity" />
+        <activity android:name=".Activities.DatabaseExample.DatabaseExampleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activities.NetworkExample.NetworkExampleActivity"
             android:label="@string/title_activity_network_example"

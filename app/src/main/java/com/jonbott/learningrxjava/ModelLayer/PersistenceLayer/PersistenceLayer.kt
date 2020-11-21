@@ -42,9 +42,17 @@ class PersistenceLayer {
         }
     }
 
+    fun insertItem(photoDescription: PhotoDescription) {
+        GlobalScope.launch {
+            val database = LearningRxJavaApplication.database
+            database.photoDescriptionDao().insert(photoDescription)
+        }
+
+    }
+
     fun loadAllPhotoDescriptions(finished: PhotoDescriptionLambda) { //async api
 
-        databaseReady.subscribe(onNext@ { isReady ->
+        databaseReady.subscribe(onNext@{ isReady ->
             if (!isReady) return@onNext
 
             getDescriptionsWithCoroutines(finished)
@@ -73,7 +81,7 @@ class PersistenceLayer {
     }
 }
 
-@Database(entities = arrayOf(PhotoDescription::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(PhotoDescription::class), version = 2, exportSchema = false)
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun photoDescriptionDao(): PhotoDescriptionDao
 }
@@ -86,12 +94,14 @@ data class PhotoDescription(
         var id: Int?,
         var title: String?,
         var url: String?,
-        var thumbnailUrl: String?
+        var thumbnailUrl: String?,
+        @ColumnInfo(name = "created_at")
+        var createdAt: Long?
 )
 
 @Dao
 interface PhotoDescriptionDao {
-    @Query("SELECT * FROM photo_descriptions LIMIT 100")
+    @Query("SELECT * FROM photo_descriptions ORDER BY uid DESC LIMIT 100 ")
     fun getDescriptions(): Flowable<List<PhotoDescription>>
 
     @Insert

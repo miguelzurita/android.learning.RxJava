@@ -1,7 +1,9 @@
 package com.jonbott.learningrxjava
 
 import android.app.Application
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
+import android.arch.persistence.room.migration.Migration
 import com.google.gson.Gson
 import com.jonbott.learningrxjava.Common.fromJson
 import com.jonbott.learningrxjava.ModelLayer.PersistenceLayer.LocalDatabase
@@ -11,7 +13,8 @@ import com.jonbott.learningrxjava.SimpleExamples.SimpleRx
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LearningRxJavaApplication: Application() {
+
+class LearningRxJavaApplication : Application() {
 
     companion object {
         lateinit var database: LocalDatabase
@@ -30,9 +33,20 @@ class LearningRxJavaApplication: Application() {
     }
 
     //region Database Setup Methods
+    //handle migration
+    //https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
+    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE photo_descriptions "
+                    + " ADD COLUMN created_at INTEGER")
+        }
+    }
 
-    fun setupDatabase(){
-        LearningRxJavaApplication.database = Room.databaseBuilder(this, LocalDatabase::class.java, "LearningRxJavaLocalDatabase").build()
+    fun setupDatabase() {
+        LearningRxJavaApplication.database = Room.databaseBuilder(this, LocalDatabase::class.java, "LearningRxJavaLocalDatabase")
+//                .fallbackToDestructiveMigration()
+                .addMigrations(MIGRATION_1_2)
+                .build()
 
         GlobalScope.launch {
             val photoDescriptions = loadJson()

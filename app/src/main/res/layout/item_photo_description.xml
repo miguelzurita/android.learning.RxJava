@@ -10,49 +10,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Title:"
-            app:layout_constraintStart_toEndOf="@+id/photoDescriptionImageView"
-            app:layout_constraintTop_toTopOf="@+id/photoDescriptionImageView" />
-
         <ImageView
             android:id="@+id/photoDescriptionImageView"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="150dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/photoDescriptionTitleTextView"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp"
-            android:text="Some Title"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            app:layout_constraintStart_toEndOf="@+id/photoDescriptionImageView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:text="Title:" />
+
+            <TextView
+                android:id="@+id/photoDescriptionTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Some Title" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/photoDescriptionInfoTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Some Url"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/photoDescriptionImageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/tv_created"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/photoDescriptionInfoTextView"
+            app:layout_constraintStart_toStartOf="@+id/photoDescriptionInfoTextView"
+            app:layout_constraintTop_toBottomOf="@+id/photoDescriptionInfoTextView" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
