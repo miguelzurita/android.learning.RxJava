@@ -1,5 +1,6 @@
 package com.jonbott.learningrxjava.Activities.TasksExample
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.jonbott.learningrxjava.Common.disposedBy
@@ -7,7 +8,9 @@ import com.jonbott.learningrxjava.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
-class TasksExampleActivity : AppCompatActivity() {
+//Replace AppCompatActivity to Activity, to remove messages in logcat
+//https://stackoverflow.com/a/58954123
+class TasksExampleActivity : Activity() {
 
     private val presenter = TasksExamplePresenter()
 
@@ -21,6 +24,7 @@ class TasksExampleActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ infoList ->
                     println("all process completed successfully")
+                    println("network results size: ${infoList.size}")
                     println("network results: \n\t $infoList")
                     infoList.forEach { println("nn: ${it}") }
                 }, { error ->
