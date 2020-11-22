@@ -1,22 +1,26 @@
 package com.jonbott.learningrxjava.Activities.ReactiveUi.Simple
 
 import android.view.View
+import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jonbott.learningrxjava.ModelLayer.Entities.Friend
 import io.reactivex.subjects.BehaviorSubject
 
 class SimpleUIPresenter {
 
 
+    val title: BehaviorRelay<String> = BehaviorRelay.createDefault("Loaded")
     val defaultFriend = Friend("friend", "nn")
     val selectedFriend = BehaviorSubject.createDefault(defaultFriend)
 
     fun onItemClick(friend: Friend) {
         selectedFriend.onNext(friend)
+        title.accept(friend.lastName)
 //        println("link item:" + friend.firstName + " - " + friend.lastName)
     }
 
     fun clearFriend() {
         selectedFriend.onNext(defaultFriend)
+        title.accept(defaultFriend.lastName)
     }
 
     var friends = listOf(Friend("Debi", "Darlington"),

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ArrayAdapter
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jonbott.learningrxjava.Common.disposedBy
 import com.jonbott.learningrxjava.R
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_simple_ui.*
@@ -25,7 +27,16 @@ class SimpleUIActivity : AppCompatActivity() {
     }
 
     private fun rxExamples() {
+        rxBindTitle()
         rxSimpleListBind()
+    }
+
+    private fun rxBindTitle() {
+        presenter.title.observeOn(AndroidSchedulers.mainThread())
+                .onErrorReturn { "Default Value" }
+                .share()
+                .subscribe(RxTextView.text(simpleUITitleTextView2))
+                .disposedBy(bag)
     }
 
 
