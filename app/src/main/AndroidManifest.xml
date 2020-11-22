@@ -37,7 +37,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.TasksExample.TasksExampleActivity" />
+        <activity android:name=".Activities.TasksExample.TasksExampleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.ReactiveUi.Complex.ReactiveUIActivity" />
         <activity android:name=".Activities.ReactiveUi.Simple.SimpleUIActivity">
             <intent-filter>

@@ -2,14 +2,23 @@ package com.jonbott.learningrxjava.ModelLayer.NetworkLayer
 
 import com.jonbott.datalayerexample.DataLayer.NetworkLayer.EndpointInterfaces.JsonPlaceHolder
 import com.jonbott.datalayerexample.DataLayer.NetworkLayer.Helpers.ServiceGenerator
+import com.jonbott.learningrxjava.Common.NullBox
 import com.jonbott.learningrxjava.Common.StringLambda
 import com.jonbott.learningrxjava.Common.VoidLambda
 import com.jonbott.learningrxjava.ModelLayer.Entities.Message
+import com.jonbott.learningrxjava.ModelLayer.Entities.Person
+import io.reactivex.Observable
 import io.reactivex.Single
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.lang.Exception
+import com.github.kittinunf.result.Result
+import io.reactivex.rxkotlin.zip
 
 
 typealias MessageLambda = (Message?) -> Unit
@@ -122,5 +131,56 @@ class NetworkLayer {
     }
 
     //endregion
+
+
+    //region task example
+
+    //Make one Observable for each person in a list
+    fun loadInfoFor(people: List<Person>): Observable<List<String>> {
+        //Foreach person make a network call
+        val networkObservables = people.map(::buildGetInfoNetworkCallFor)
+
+        //when all server results have returned zip observables into a single observable
+        return networkObservables.zip { list ->
+            list.filter { box -> box.value != null }
+                    .map { it.value!! }
+
+        }
+    }
+
+    //Wrap task in reactive observable
+    //This pattern is used often for units of work
+    private fun buildGetInfoNetworkCallFor(person: Person): Observable<NullBox<String>> {
+        return Observable.create { observer ->
+            //Execute request - Do actual work here
+            getInfoFor(person) { result ->
+                result.fold({ info ->
+                    observer.onNext(info)
+                    observer.onComplete()
+                }, { error ->
+                    observer.onError(error)
+                })
+            }
+        }
+    }
+
+    //Create a network task
+    fun getInfoFor(person: Person, finished: (Result<NullBox<String>, Exception>) -> Unit) {
+        //Execute on Background Thread
+        //Do your task here
+        GlobalScope.launch {
+            println("start network call: $person")
+            val randomTime: Long = person.age * 1000L //to milliseconds
+            delay(randomTime)
+            println("finished network call: $person")
+
+            //just randomly make odd people null
+            var result = Result.of(NullBox(person.toString()))
+            finished(result)
+        }
+    }
+
+    //endregion
+
 
 }
